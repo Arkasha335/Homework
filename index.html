@@ -2,37 +2,141 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Трекер заданий</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Homework Tracker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="header-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>Homework Tracker</h1>
+                </div>
+                <div class="header-stats">
+                    <span class="subject-count">0 предметов</span>
+                </div>
+            </div>
+        </header>
 
-    <header class="header">
-        <h1>Мои задания</h1>
-        <p id="last-updated">Обновление...</p>
-    </header>
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Add Subject Button -->
+            <button class="add-subject-btn" id="addSubjectBtn">
+                <i class="fas fa-plus"></i>
+                <span>Добавить предмет</span>
+            </button>
 
-    <main id="subjects-container" class="container">
-        <!-- Карточки с предметами будут добавляться сюда с помощью JavaScript -->
-    </main>
-    
-    <!-- Кнопка для добавления нового предмета -->
-    <button id="add-subject-btn" class="fab" title="Добавить предмет">+</button>
+            <!-- Subjects List -->
+            <div class="subjects-container" id="subjectsContainer">
+                <!-- Subjects will be dynamically added here -->
+            </div>
 
-    <!-- Модальное окно для ввода названия предмета (скрыто по умолчанию) -->
-    <div id="add-modal" class="modal-overlay">
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-book-open"></i>
+                <h2>Нет предметов</h2>
+                <p>Добавьте первый предмет, чтобы начать отслеживать домашние задания</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Subject Modal -->
+    <div class="modal" id="subjectModal">
         <div class="modal-content">
-            <h2>Новый предмет</h2>
-            <input type="text" id="new-subject-name" placeholder="Например, Химия">
-            <div class="modal-actions">
-                <button id="cancel-add">Отмена</button>
-                <button id="save-subject">Сохранить</button>
+            <div class="modal-header">
+                <h2 id="modalTitle">Новый предмет</h2>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="subjectName">Название предмета</label>
+                    <input type="text" id="subjectName" placeholder="Например: Уголовное право" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="subjectIcon">Иконка</label>
+                    <div class="icon-selector">
+                        <button type="button" class="icon-option active" data-icon="fa-book">
+                            <i class="fas fa-book"></i>
+                        </button>
+                        <button type="button" class="icon-option" data-icon="fa-gavel">
+                            <i class="fas fa-gavel"></i>
+                        </button>
+                        <button type="button" class="icon-option" data-icon="fa-balance-scale">
+                            <i class="fas fa-balance-scale"></i>
+                        </button>
+                        <button type="button" class="icon-option" data-icon="fa-landmark">
+                            <i class="fas fa-landmark"></i>
+                        </button>
+                        <button type="button" class="icon-option" data-icon="fa-file-contract">
+                            <i class="fas fa-file-contract"></i>
+                        </button>
+                        <button type="button" class="icon-option" data-icon="fa-users">
+                            <i class="fas fa-users"></i>
+                        </button>
+                        <button type="button" class="icon-option" data-icon="fa-briefcase">
+                            <i class="fas fa-briefcase"></i>
+                        </button>
+                        <button type="button" class="icon-option" data-icon="fa-fingerprint">
+                            <i class="fas fa-fingerprint"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subjectColor">Цвет</label>
+                    <div class="color-selector">
+                        <button type="button" class="color-option active" data-color="#667EEA" style="background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%)"></button>
+                        <button type="button" class="color-option" data-color="#F093FB" style="background: linear-gradient(135deg, #F093FB 0%, #F5576C 100%)"></button>
+                        <button type="button" class="color-option" data-color="#4FACFE" style="background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%)"></button>
+                        <button type="button" class="color-option" data-color="#43E97B" style="background: linear-gradient(135deg, #43E97B 0%, #38F9D7 100%)"></button>
+                        <button type="button" class="color-option" data-color="#FA709A" style="background: linear-gradient(135deg, #FA709A 0%, #FEE140 100%)"></button>
+                        <button type="button" class="color-option" data-color="#30CFD0" style="background: linear-gradient(135deg, #30CFD0 0%, #330867 100%)"></button>
+                        <button type="button" class="color-option" data-color="#FEB47B" style="background: linear-gradient(135deg, #FEB47B 0%, #FF7E5F 100%)"></button>
+                        <button type="button" class="color-option" data-color="#6A11CB" style="background: linear-gradient(135deg, #6A11CB 0%, #2575FC 100%)"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelBtn">Отмена</button>
+                <button class="btn btn-primary" id="saveSubjectBtn">Сохранить</button>
             </div>
         </div>
+    </div>
+
+    <!-- Homework Modal -->
+    <div class="modal" id="homeworkModal">
+        <div class="modal-content modal-fullscreen">
+            <div class="modal-header">
+                <h2 id="homeworkModalTitle">Домашнее задание</h2>
+                <button class="modal-close" id="closeHomeworkModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="homeworkText">Задание</label>
+                    <textarea id="homeworkText" placeholder="Введите домашнее задание..." rows="8"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelHomeworkBtn">Отмена</button>
+                <button class="btn btn-primary" id="saveHomeworkBtn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Сохранено</span>
     </div>
 
     <script src="script.js"></script>
