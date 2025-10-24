@@ -1,0 +1,89 @@
+/* --- Общие стили и сброс --- */
+body {
+    background-color: #f8f9fa; /* Очень светло-серый фон */
+    color: #212529; /* Почти черный текст для контраста */
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 1rem;
+}
+
+/* --- Типографика --- */
+h1, h2 {
+    margin: 0;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
+}
+
+h2 {
+    font-size: 1.4rem;
+    color: #005f73; /* Приятный сине-зеленый акцент */
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 0.5rem;
+}
+
+p {
+    margin: 0.5rem 0;
+}
+
+/* --- Верхний блок (Header) --- */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#last-updated {
+    color: #6c757d; /* Приглушенный серый для мета-информации */
+    font-size: 0.9rem;
+}
+
+/* --- Контейнер для карточек --- */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* --- Стилизация карточки предмета --- */
+.subject-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Легкая, мягкая тень */
+    border: 1px solid #e9ecef;
+}
+
+.task-field {
+    margin-bottom: 1rem;
+}
+
+.task-field:last-child {
+    margin-bottom: 0;
+}
+
+.task-field strong {
+    color: #495057;
+    font-weight: 500;
+}
+
+/* --- Адаптивность для больших экранов (Планшеты и ПК) --- */
+@media (min-width: 768px) {
+    body {
+        padding: 2rem;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .subject-card {
+        margin-bottom: 0;
+    }
+}
