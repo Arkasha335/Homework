@@ -1,40 +1,223 @@
-/* --- Общие стили и сброс --- */
+:root {
+    --bg-color: #f4f7f9;
+    --card-bg-color: #ffffff;
+    --primary-text-color: #1a202c;
+    --secondary-text-color: #718096;
+    --accent-color: #4a90e2;
+    --danger-color: #e53e3e;
+    --border-color: #e2e8f0;
+    --shadow-color: rgba(0, 0, 0, 0.07);
+}
+
 body {
-    background-color: #f8f9fa; /* Очень светло-серый фон */
-    color: #212529; /* Почти черный текст для контраста */
-    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+    font-family: 'Manrope', sans-serif;
     line-height: 1.6;
     margin: 0;
-    padding: 1rem;
+    padding: 1rem 1rem 5rem; /* Добавили отступ снизу для кнопки */
 }
 
-/* --- Типографика --- */
-h1, h2 {
-    margin: 0;
-    font-weight: 700;
-}
-
-h1 {
-    font-size: 1.75rem;
-    margin-bottom: 0.25rem;
-}
-
-h2 {
-    font-size: 1.4rem;
-    color: #005f73; /* Приятный сине-зеленый акцент */
-    margin-bottom: 1rem;
-    border-bottom: 2px solid #e9ecef;
-    padding-bottom: 0.5rem;
-}
-
-p {
-    margin: 0.5rem 0;
-}
-
-/* --- Верхний блок (Header) --- */
+/* --- Хедер и типографика --- */
 .header {
     text-align: center;
     margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+#last-updated {
+    color: var(--secondary-text-color);
+    font-size: 0.9rem;
+}
+
+/* --- Основной контейнер --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* --- Карточка предмета --- */
+.subject-card {
+    background-color: var(--card-bg-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.subject-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: var(--secondary-text-color);
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    line-height: 1;
+    border-radius: 50%;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.delete-btn:hover {
+    color: var(--danger-color);
+    background-color: #fef2f2;
+}
+
+/* --- Редактируемые поля --- */
+.task-field strong {
+    font-weight: 600;
+    color: var(--primary-text-color);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.editable {
+    padding: 0.5rem;
+    border-radius: 8px;
+    min-height: 2rem;
+    transition: background-color 0.2s ease;
+}
+
+.editable:focus {
+    background-color: #eef5ff;
+    outline: 2px solid var(--accent-color);
+}
+
+.editable:empty::before {
+    content: 'Нажмите, чтобы добавить...';
+    color: var(--secondary-text-color);
+    font-style: italic;
+    cursor: text;
+}
+
+/* --- Плавающая кнопка (FAB) --- */
+.fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 56px;
+    height: 56px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.fab:hover {
+    transform: scale(1.1);
+}
+
+/* --- Модальное окно --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none; /* Скрыто по умолчанию */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--card-bg-color);
+    padding: 2rem;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+}
+
+#new-subject-name {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 1rem;
+    box-sizing: border-box;
+}
+
+.modal-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.modal-actions button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+#cancel-add {
+    background-color: var(--border-color);
+    color: var(--secondary-text-color);
+}
+
+#save-subject {
+    background-color: var(--accent-color);
+    color: white;
+}    margin-bottom: 2rem;
 }
 
 #last-updated {
